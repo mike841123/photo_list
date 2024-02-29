@@ -87,7 +87,7 @@ class _PhotoListState extends State<PhotoList> {
                   onPressed: () {
                     randomList = List.generate(
                       30,
-                          (index) => <int>[index, _randomHeight().toInt()],
+                      (index) => <int>[index, _randomHeight().toInt()],
                     );
                     print(randomList);
                     setState(() {});
@@ -140,31 +140,36 @@ class _PhotoListState extends State<PhotoList> {
                   itemCount: randomList.length,
                   itemBuilder: (context, index) {
                     final item = randomList[index];
-                    return AutoScrollTag(
-                      key: ValueKey(index),
-                      controller: controller,
-                      index: index,
-                      child: StickyHeader(
-                        header: Container(
-                          decoration: BoxDecoration(color: Colors.grey[300], border: Border.all(color: Colors.black, width: 1)),
-                          height: 40,
-                          alignment: Alignment.center,
-                          child: Text('Header ${item[0] + 1}'),
-                        ),
-                        content: Container(
-                          decoration: const BoxDecoration(color: Colors.yellow),
-                          padding: const EdgeInsets.all(8),
-                          alignment: Alignment.topCenter,
-                          height: item[1].toDouble(),
-                          child: Text('Index: ${item[0] + 1}, Height: ${item[1]}'),
-                        ),
-                      ),
-                    );
+                    return _photoItem(index, item);
                   },
                 ),
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  /// 照片item
+  Widget _photoItem(int index, List<int> item) {
+    return AutoScrollTag(
+      key: ValueKey(index),
+      controller: controller,
+      index: index,
+      child: StickyHeader(
+        header: Container(
+          decoration: BoxDecoration(color: Colors.grey[300], border: Border.all(color: Colors.black, width: 1)),
+          height: 40,
+          alignment: Alignment.center,
+          child: Text('Header ${item[0] + 1}'),
+        ),
+        content: Container(
+          decoration: const BoxDecoration(color: Colors.yellow),
+          padding: const EdgeInsets.all(8),
+          alignment: Alignment.topCenter,
+          height: item[1].toDouble(),
+          child: Text('Index: ${item[0] + 1}, Height: ${item[1]}'),
         ),
       ),
     );
